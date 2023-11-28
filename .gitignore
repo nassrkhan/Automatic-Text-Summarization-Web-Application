@@ -1,2 +1,29 @@
-# Ignore the .env file
+# .gitignore
+
+# Ignore the virtual environment folder
+venv/
+
+# Ignore the database file
+db.sqlite3
+
+# Ignore other common Django files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore static files
+staticfiles/
+
+# Ignore media files
+media/
+
+# Ignore environment files
 .env
+
+# Ignore dependency files
+requirements.txt
+Pipfile
+Pipfile.lock
+
+# Ignore any other files or directories you want
