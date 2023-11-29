@@ -1,0 +1,71 @@
+*{
+    box-sizing: box-model;
+}
+body{
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 62.5%;
+}
+main{
+    font-size: 1.6rem;
+}
+section{
+    padding: 3em 0;
+}
+.heroSection{
+    background-color: #23424A;
+    color: white;
+}
+.heroText{
+    margin: 0 auto;
+    width: 80%;
+}
+.heroText h2{
+    line-height: 1;
+    font-size: 1.8rem;
+}
+.heroText p{
+    max-width: 40ch;
+    margin-top: 2em;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-bottom:3em;
+}
+button{
+    background-color: #38CFD9;
+    color:black;
+    text-transform: uppercase;
+    font-weight: 900;
+    letter-spacing: 2px;
+    line-height: 2;
+    padding: 1em 2.5em;
+    border-radius: 25px;
+}
+.flexText{
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+}
+.flexText h2{
+    font-size: 1.8rem;
+}
+.card + .card{
+    margin-left: 2em;
+}
+.accentColor{
+    line-height: 1;
+    color:#000000;
+}
+.lastSection{
+    background:#81dbdb;
+    color: rgb(12, 12, 12);
+}
+
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
