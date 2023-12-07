@@ -8,11 +8,11 @@ from PyPDF2 import PdfReader  # for PDF files
 
 import re
 import nltk
+import heapq
 
 # Create your views here.
 def main(request):
-    # messages.success(request, 'The post has been created successfully.')
-    #return HttpResponse("Hello, World!")
+    messages.success(request, 'The post has been created successfully.')
     return render(request,'base.html')
 global text
 def upload_document(request):
@@ -46,53 +46,134 @@ def upload_document(request):
             # Remove the temporary file
             os.remove(temporary_file_path)
             
-            # summarization(text)
-            # return HttpResponse(text)
             return render(request, 'show.html', {'extracted_text': text})
 
     except Exception as e:
         # Handle exceptions (e.g., file not found, extraction error)
         return HttpResponse(f'Error: {str(e)}')
 
+# def summarization(request):
+
+#     if request.method == 'POST':
+#         article_text = request.POST.get('extracted_text', '')
+
+#         # article_text = extracted_text
+
+#         # Removing Square Brackets and Extra Spaces
+#         article_text = re.sub(r'\[[0-9]*\]', ' ', article_text)
+#         article_text = re.sub(r'\s+', ' ', article_text)
+#         # Remove non-word characters
+#         article_text = re.sub(r'\W', ' ', article_text)
+#         # Single Character Removal
+#         article_text = re.sub(r'\s+[a-zA-Z]\s+', ' ', article_text)
+#         article_text = re.sub(r'\^[a-zA-Z]\s+', ' ', article_text)
+#         # Leading 'b' Removal
+#         article_text = re.sub(r'^b\s+', '', article_text)
+#         # Leading and Trailing Whitespaces Removal
+#         article_text = re.sub(r'^\s', '', article_text)
+#         article_text = re.sub(r'\s$', '', article_text)
+#         # Multiple Spaces Removal
+#         article_text = re.sub(r'\s+', ' ', article_text, flags=re.I)
+#         # Removing special characters and digits
+#         formatted_article_text = re.sub('[^a-zA-Z]', ' ', article_text )
+#         formatted_article_text = re.sub(r'\s+', ' ', formatted_article_text)
+#         sentence_list = nltk.sent_tokenize(formatted_article_text)
+#         stopwords = nltk.corpus.stopwords.words('english')
+
+#         word_frequencies = {}
+#         for word in nltk.word_tokenize(formatted_article_text):
+#             if word not in stopwords:
+#                 if word not in word_frequencies.keys():
+#                     word_frequencies[word] = 1
+#                 else:
+#                     word_frequencies[word] += 1
+#             maximum_frequncy = max(word_frequencies.values())
+#         for word in word_frequencies.keys():
+#             word_frequencies[word] = (word_frequencies[word]/maximum_frequncy)
+#             sentence_scores = {}
+#         for sent in sentence_list:
+#             for word in nltk.word_tokenize(sent.lower()):
+#                 if word in word_frequencies.keys():
+#                     if len(sent.split(' ')) < 30:
+#                         if sent not in sentence_scores.keys():
+#                             sentence_scores[sent] = word_frequencies[word]
+#                         else:
+#                             sentence_scores[sent] += word_frequencies[word]
+#         import heapq
+#         summary_sentences = heapq.nlargest(7, sentence_scores, key=sentence_scores.get)
+
+#         summary = ' '.join(summary_sentences)
+        
+#         return HttpResponse(summary)
+        # return render(request, 'show.html', {'extracted_text': summary})
+
 def summarization(request):
-
     if request.method == 'POST':
-        article_text = request.POST.get('extracted_text', '')
+        # Get the article text from the form data
+        ex_text = request.POST.get('extracted_text', '')
 
-        # article_text = extracted_text
+        # Preprocessing steps
 
-        # Removing Square Brackets and Extra Spaces
-        article_text = re.sub(r'\[[0-9]*\]', ' ', article_text)
+        # Remove square brackets and extra spaces
+        article_text = re.sub(r'\[[0-9]*\]', ' ', ex_text)
         article_text = re.sub(r'\s+', ' ', article_text)
+
+        # Remove non-word characters
+        article_text = re.sub(r'\W', ' ', article_text)
+
+        # Single character removal
+        article_text = re.sub(r'\s+[a-zA-Z]\s+', ' ', article_text)
+        article_text = re.sub(r'\^[a-zA-Z]\s+', ' ', article_text)
+
+        # Leading 'b' removal
+        article_text = re.sub(r'^b\s+', '', article_text)
+
+        # Leading and trailing whitespaces removal
+        article_text = re.sub(r'^\s', '', article_text)
+        article_text = re.sub(r'\s$', '', article_text)
+
+        # Remove multiple spaces
+        article_text = re.sub(r'\s+', ' ', article_text, flags=re.I)
+
         # Removing special characters and digits
-        formatted_article_text = re.sub('[^a-zA-Z]', ' ', article_text )
+        formatted_article_text = re.sub('[^a-zA-Z]', ' ', article_text)
         formatted_article_text = re.sub(r'\s+', ' ', formatted_article_text)
+        
+        # Tokenize the sentences
         sentence_list = nltk.sent_tokenize(article_text)
+
+        # Get English stopwords
         stopwords = nltk.corpus.stopwords.words('english')
 
+        # Calculate word frequencies in the article
         word_frequencies = {}
-        for word in nltk.word_tokenize(formatted_article_text):
+        for word in nltk.word_tokenize(formatted_article_text.lower()):
             if word not in stopwords:
-                if word not in word_frequencies.keys():
+                if word not in word_frequencies:
                     word_frequencies[word] = 1
                 else:
                     word_frequencies[word] += 1
-            maximum_frequncy = max(word_frequencies.values())
-        for word in word_frequencies.keys():
-            word_frequencies[word] = (word_frequencies[word]/maximum_frequncy)
-            sentence_scores = {}
+
+        # Normalize word frequencies
+        maximum_frequency = max(word_frequencies.values())
+        for word in word_frequencies:
+            word_frequencies[word] = (word_frequencies[word] / maximum_frequency)
+
+        # Calculate sentence scores based on word frequencies
+        sentence_scores = {}
         for sent in sentence_list:
             for word in nltk.word_tokenize(sent.lower()):
-                if word in word_frequencies.keys():
+                if word in word_frequencies:
                     if len(sent.split(' ')) < 30:
-                        if sent not in sentence_scores.keys():
+                        if sent not in sentence_scores:
                             sentence_scores[sent] = word_frequencies[word]
                         else:
                             sentence_scores[sent] += word_frequencies[word]
-        import heapq
+
+        # Get the top 7 sentences as the summary
         summary_sentences = heapq.nlargest(7, sentence_scores, key=sentence_scores.get)
-
         summary = ' '.join(summary_sentences)
-        # print(summary)
-        return HttpResponse(summary)
 
+        # print(summary)
+
+        return HttpResponse(summary)
