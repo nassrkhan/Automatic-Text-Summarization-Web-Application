@@ -1,0 +1,20 @@
+
+<!-- upload_document.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Document</title>
+</head>
+<body>
+    <h2>Extracted Text</h2>
+    <form method="post" action="{% url 'summary' %}">
+        {% csrf_token %}
+        <textarea name="extracted_text" rows="10" cols="50" readonly>{{ extracted_text }}</textarea>
+        <br>
+        <button type="submit">Proceed</button>
+    </form>
+</body>
+</html>
