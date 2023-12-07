@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 16px; /* Set a base font size for better scalability */
+}
+
+.container {
+  text-align: center;
+  padding: 20px; /* Added padding to all sides of the container */
+}
+
+.custom-btn {
+  background-color: #38CFD9;
+  color: #fff;
+  /* padding: 14px 28px; */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem; /* Set font size for the button */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.custom-btn:hover {
+  background-color: #23424A;
+}
+
+h2 {
+  margin-bottom: 20px; /* Add space between the heading and the textarea */
+}
+
+textarea {
+  width: 100%; /* Make the text area 100% of its container */
+  padding: 12px;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  font-size: 1.6rem; /* Set font size for the textarea */
+  margin-bottom: 20px; /* Add some space between the textarea and the button */
+  resize: none; /* Disable textarea resizing */
+  border: 1px solid #ccc; /* Default border for the textarea */
+  transition: border 0.3s ease; /* Smooth transition on hover */
+}
+
+textarea:hover {
+    border: 3px dashed #23424A; /* Border color on hover */
+}

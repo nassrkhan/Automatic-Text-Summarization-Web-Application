@@ -1,20 +1,31 @@
-
 <!-- upload_document.html -->
-
+{% extends "base.html" %} 
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  {% block head %}
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Document</title>
-</head>
-<body>
-    <h2>Extracted Text</h2>
-    <form method="post" action="{% url 'summary' %}">
-        {% csrf_token %}
-        <textarea name="extracted_text" rows="10" cols="50" readonly>{{ extracted_text }}</textarea>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/show.css' %}">
+    {% block title %}
+      <title>Extracted Text</title>
+    {% endblock title %}
+  </head>
+  {% endblock head %}
+  <body>
+    {% block content %}
+    <div class="container">
+        <h2 class="center">Extracted Text</h2>
+        <form method="post" action="{% url 'summary' %}">
+          {% csrf_token %}
+          <textarea name="extracted_text" rows="10" readonly>{{ extracted_text }}</textarea>
+          <br>
+          <button type="submit" class="custom-btn">Proceed</button>
+        </form>
         <br>
-        <button type="submit">Proceed</button>
-    </form>
-</body>
+    </div>
+    {% endblock %}
+  </body>
 </html>
