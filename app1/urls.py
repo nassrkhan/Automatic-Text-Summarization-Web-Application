@@ -5,8 +5,4 @@ urlpatterns = [
     path('', views.main, name='main'),
     path('UPLOAD', views.upload_document, name='upload_document'),
     path('summary', views.summarization, name='summary'),
-
-    #path('profile_update', views.profile_update, name='profile_update'),
-
-    #path('profile', views.profile, name='profile'),
 ]
