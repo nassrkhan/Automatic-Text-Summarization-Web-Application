@@ -24,3 +24,28 @@ You can install the required Python packages using:
 
 ```bash
 pip install django nltk docx2txt PyPDF2
+
+
+#Getting Started
+##Clone the repository:
+git clone https://github.com/your-username/document-summarization.git
+
+##Navigate to the project directory:
+cd document-summarization
+
+##Run the Django development server:
+python manage.py runserver
+Open your web browser and visit http://localhost:8000/ to access the application.
+
+Upload a document on the main page to extract text and view the summary on the following page.
+
+#File Structure
+summarization/views.py: Contains Django views for document upload and text summarization.
+media/: Temporary storage for uploaded files.
+templates/: HTML templates for rendering pages.
+
+#Acknowledgements
+Django
+nltk
+docx2txt
+PyPDF2
