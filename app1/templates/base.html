@@ -30,6 +30,7 @@
 
       <section  class="flexSection lastSection1">
           <div class="form-container">
+            {% include 'message.html' %}
               <form method="POST" class="custom-form" action="{% url 'upload_document' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label class="form-label">

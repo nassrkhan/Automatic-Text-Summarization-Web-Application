@@ -25,7 +25,7 @@ def upload_document(request):
             with open(temporary_file_path, 'wb+') as destination:
                 for chunk in uploaded_file.chunks():
                     destination.write(chunk)
-
+                messages.add_message(request, messages.ERROR, 'Password should be atleast 8 characters, should be alpha numeric')
             # Determine file format and extract text accordingly
             if uploaded_file.content_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
                 # DOCX file
