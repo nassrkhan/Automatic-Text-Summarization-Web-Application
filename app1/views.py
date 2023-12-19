@@ -12,7 +12,7 @@ import heapq
 
 # Create your views here.
 def main(request):
-    messages.success(request, 'The post has been created successfully.')
+    # messages.success(request, 'The post has been created successfully.')
     return render(request,'base.html')
 global text
 def upload_document(request):
@@ -25,7 +25,7 @@ def upload_document(request):
             with open(temporary_file_path, 'wb+') as destination:
                 for chunk in uploaded_file.chunks():
                     destination.write(chunk)
-                messages.add_message(request, messages.ERROR, 'Password should be atleast 8 characters, should be alpha numeric')
+
             # Determine file format and extract text accordingly
             if uploaded_file.content_type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
                 # DOCX file
@@ -45,8 +45,10 @@ def upload_document(request):
 
             # Remove the temporary file
             os.remove(temporary_file_path)
+
+            messages.success(request, 'Document successfully uploaded!')
             
-            return render(request, 'showText.html', {'extracted_text': text})
+            return render(request, 'base1.html', {'extracted_text': text})
 
     except Exception as e:
         # Handle exceptions (e.g., file not found, extraction error)
