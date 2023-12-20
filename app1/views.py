@@ -48,12 +48,12 @@ def upload_document(request):
 
             messages.success(request, 'Text Extractted Successfully !')
             
-            return render(request, 'showText.html', {'extracted_text': text})
+            return render(request, 'base1.html', {'extracted_text': text})
 
     except Exception as e:
         # Handle exceptions (e.g., file not found, extraction error)
         messages.error(request, 'Incorrect File Format: {}'.format(str(e)))
-    return render(request, 'base.html')
+    return render(request, 'showText.html')
 
 def summarization(request):
     if request.method == 'POST':

@@ -45,6 +45,11 @@
                     notification.remove();
                 });
             }, 2000); // Adjust the time in milliseconds (e.g., 2000 for 2 seconds)
+          // Scroll to the text section
+          var textSection = document.querySelector('.container');
+            if (textSection) {
+                textSection.scrollIntoView({ behavior: 'smooth' });
+            }
         });
     </script>
     {% endblock script %}
