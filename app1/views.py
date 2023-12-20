@@ -12,8 +12,8 @@ import heapq
 
 # Create your views here.
 def main(request):
-    # messages.success(request, 'The post has been created successfully.')
     return render(request,'base.html')
+
 global text
 def upload_document(request):
     try:
@@ -41,18 +41,19 @@ def upload_document(request):
                 with open(temporary_file_path, 'r') as f:
                     text = f.read()
             else:
-                text = 'Unsupported file format'
+                messages.success(request, 'Unsupported file format !')
 
             # Remove the temporary file
             os.remove(temporary_file_path)
 
-            messages.success(request, 'Document successfully uploaded!')
+            messages.success(request, 'Text Extractted Successfully !')
             
             return render(request, 'showText.html', {'extracted_text': text})
 
     except Exception as e:
         # Handle exceptions (e.g., file not found, extraction error)
-        return HttpResponse(f'Error: {str(e)}')
+        messages.error(request, 'Incorrect File Format: {}'.format(str(e)))
+    return render(request, 'base.html')
 
 def summarization(request):
     if request.method == 'POST':
@@ -94,6 +95,8 @@ def summarization(request):
 
         summary = ' '.join(summary_sentences)
         output_text = re.sub(r'\W', ' ', str(summary))
+
+        messages.success(request, 'Summary Generated Successfully !')
 
         # return HttpResponse(summary)
         return render(request, 'showSumText.html', {'sum_text': summary})

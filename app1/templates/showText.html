@@ -36,5 +36,18 @@
         <br>
     </div>
     {% endblock %}
+    {% block script %}
+    <script>
+        // Automatically close notifications after 5 seconds
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(function () {
+                var notifications = document.querySelectorAll('.notification');
+                notifications.forEach(function (notification) {
+                    notification.remove();
+                });
+            }, 2000); // Adjust the time in milliseconds (e.g., 2000 for 2 seconds)
+        });
+    </script>
+    {% endblock script %}
   </body>
 </html>
