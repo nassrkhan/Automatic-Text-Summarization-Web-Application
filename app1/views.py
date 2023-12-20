@@ -48,7 +48,7 @@ def upload_document(request):
 
             messages.success(request, 'Document successfully uploaded!')
             
-            return render(request, 'base1.html', {'extracted_text': text})
+            return render(request, 'showText.html', {'extracted_text': text})
 
     except Exception as e:
         # Handle exceptions (e.g., file not found, extraction error)

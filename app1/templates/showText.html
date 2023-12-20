@@ -16,8 +16,17 @@
   {% endblock head %}
   <body>
     {% block content %}
+
     <div class="container">
         <h2 class="center">Extracted Text</h2>
+        <!-- Notification Container -->
+        <div class="notification-container">
+          {% for message in messages %}
+              <div class="notification {% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% endif %}">
+                  {{ message }}
+              </div>
+          {% endfor %}
+        </div>
         <form method="post" action="{% url 'summary' %}">
           {% csrf_token %}
           <textarea name="extracted_text" rows="10" readonly>{{ extracted_text }}</textarea>
