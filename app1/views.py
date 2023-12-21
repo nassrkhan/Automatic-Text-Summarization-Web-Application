@@ -98,5 +98,4 @@ def summarization(request):
 
         messages.success(request, 'Summary Generated Successfully !')
 
-        # return HttpResponse(summary)
         return render(request, 'showSumText.html', {'sum_text': summary})
